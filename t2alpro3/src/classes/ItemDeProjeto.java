@@ -12,6 +12,11 @@ public class ItemDeProjeto {
     private String nome;
     private double valor;
 
+    public ItemDeProjeto(String nome, int valor) {
+       this.nome = nome;
+       this.valor = valor;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -27,5 +32,7 @@ public class ItemDeProjeto {
     public void setValor(double valor) {
         this.valor = valor;
     }
-    
+    public String toString(){
+    return nome;
+    }
 }

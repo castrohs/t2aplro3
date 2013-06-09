@@ -14,14 +14,14 @@ public class Grafo1 {
     private int[] predecessor;// " p[] ou PI[]
     private ArrayList<ItemDeProjeto> listaDeNodosValidos = new ArrayList<>();
     
-    public Grafo1(int n) {
-        if (n <= 0)
+    public Grafo1(ArrayList<ItemDeProjeto> lista) {
+        if (lista.size() <= 0)
             throw new IllegalArgumentException("Numero de nodos invalido!");
- 
+        listaDeNodosValidos = lista;
         max = listaDeNodosValidos.size();
         matAdj = new int[max][max];
         visitado = new boolean[max];
- 
+        
         distancia = new int[max];
         predecessor = new int[max];
  
@@ -37,26 +37,40 @@ public class Grafo1 {
             throw new IllegalArgumentException("Aresta invalida, orig: " + orig
                            + " dest:" + dest);
         }
-        else*/
-        for (int i = 0 ;i < listaDeNodosValidos.size();i++){
-            for (int j = 0 ;j < listaDeNodosValidos.size();j++){
-                ItemDeProjeto origAux = listaDeNodosValidos.get(i);
-                ItemDeProjeto destgAux = listaDeNodosValidos.get(j);
-                if (origAux.getNome().equalsIgnoreCase(orig) && destgAux.getNome().equalsIgnoreCase(dest) )
-                       matAdj[i][j] = p;
+ 
+         else*/
+        for (int i = 1; i < listaDeNodosValidos.size(); i++) {
+            ItemDeProjeto origAux = listaDeNodosValidos.get(i);
+            if (origAux.getNome().equalsIgnoreCase(orig)) {
+                for (int j = 1; j < listaDeNodosValidos.size(); j++) {
+                    ItemDeProjeto destgAux = listaDeNodosValidos.get(j);
+                    if (destgAux.getNome().equalsIgnoreCase(dest)) {
+                        matAdj[i][j] = p;
+                        break;
+                    }
+                }
+                break;
             }
-            }
+        }
     }
  
-    public ArrayList<Integer> getAdjacentes(int nodo) {
-        if (nodo >= max || nodo < 1)
-            throw new IllegalArgumentException("Nodo inválido:" + nodo);
+    public ArrayList<Integer> getAdjacentes(String n) {
+        int nodo=0;
+        for (int i = 0 ; i < listaDeNodosValidos.size();i++){
+            
+            if (n.equalsIgnoreCase(listaDeNodosValidos.get(i).getNome())){
+            nodo = i;
+            break;
+            }
+        }
+        
         ArrayList<Integer> ads = new ArrayList<Integer>();
-        for (int i = 1; i < max; i++) {
+        for (int i = 0; i < max; i++) {
             if (matAdj[nodo][i] != 0) {
                 ads.add(i);
             }
         }
+        
         return ads;
     }
  
@@ -149,11 +163,21 @@ public class Grafo1 {
     public String profundidade(int u) {
         clearVisitados(); // CORMEN ET ALLI DFS, 1,2,3
         result = "";
+     /*   int u =0;
+        for(int i =0 ;i<listaDeNodosValidos.size();i++){
+            ItemDeProjeto get = listaDeNodosValidos.get(i);
+            if (get.getNome().equalsIgnoreCase(visitar)){
+                u = i;
+                break;
+            }
+        }
+        */
         visitar(u);
         return result;
     }
  
     private void visitar(int u) {
+        
         visitado[u] = true;// CORMEN ET ALLI DFS-VISIT, 1
         result += " - " + u;
         for (int i = 1; i < max; i++) {
@@ -172,6 +196,21 @@ public class Grafo1 {
     public String getPredecessores() {
         return Arrays.toString(predecessor);
     }   
+
+    public void excuta() {
+        for(int i = 1 ;i<listaDeNodosValidos.size()-1;i++){
+        String profundidade = profundidade(i);
+        System.out.println(profundidade);
+    }
+        ArrayList<Integer> adjacentes = getAdjacentes("GGW");
+        
+        for (int i =0;i<adjacentes.size();i++){
+            
+            System.out.print(listaDeNodosValidos.get(i).getNome() +" ");
+       
+        }
+        System.out.print("\n");
+    }
     
 }
  
