@@ -13,7 +13,7 @@ public class Grafo1 {
     private int[] distancia;// " d[]
     private int[] predecessor;// " p[] ou PI[]
     private ArrayList<ItemDeProjeto> listaDeNodosValidos = new ArrayList<>();
-    
+       private ArrayList<ItemDeProjeto> listabusca = new ArrayList<>();
     public Grafo1(ArrayList<ItemDeProjeto> lista) {
         if (lista.size() <= 0)
             throw new IllegalArgumentException("Numero de nodos invalido!");
@@ -39,12 +39,12 @@ public class Grafo1 {
         }
  
          else*/
-        for (int i = 1; i < listaDeNodosValidos.size(); i++) {
+        for (int i = 0; i < listaDeNodosValidos.size(); i++) {
             ItemDeProjeto origAux = listaDeNodosValidos.get(i);
-            if (origAux.getNome().equalsIgnoreCase(orig)) {
-                for (int j = 1; j < listaDeNodosValidos.size(); j++) {
+            if (orig.equalsIgnoreCase(origAux.getNome())) {
+                for (int j = 0; j < listaDeNodosValidos.size(); j++) {
                     ItemDeProjeto destgAux = listaDeNodosValidos.get(j);
-                    if (destgAux.getNome().equalsIgnoreCase(dest)) {
+                    if (dest.equalsIgnoreCase(destgAux.getNome())) {
                         matAdj[i][j] = p;
                         break;
                     }
@@ -163,30 +163,48 @@ public class Grafo1 {
     public String profundidade(int u) {
         clearVisitados(); // CORMEN ET ALLI DFS, 1,2,3
         result = "";
-     /*   int u =0;
-        for(int i =0 ;i<listaDeNodosValidos.size();i++){
-            ItemDeProjeto get = listaDeNodosValidos.get(i);
-            if (get.getNome().equalsIgnoreCase(visitar)){
-                u = i;
-                break;
-            }
-        }
-        */
         visitar(u);
+        
+            resultadoDaSoma+=listaDeNodosValidos.get(u).getValor();
+        
         return result;
     }
+ private double resultadoDaSoma=0;
  
-    private void visitar(int u) {
-        
+ private void visitar(int u) {
+
         visitado[u] = true;// CORMEN ET ALLI DFS-VISIT, 1
-        result += " - " + u;
-        for (int i = 1; i < max; i++) {
+        //result += u+"->";
+        for (int i = 0; i < max; i++) {
             if (matAdj[u][i] != 0) {
+                result += u+"->";
                 if (visitado[i] == false) {
+                   
                     visitar(i);
+                     calculaRes( u, i);
+                   
                 }
+                
             }
         }
+
+            
+            result += u+"; \n";  
+           
+        
+    }
+     
+    public double calculaResultado(int u){
+    
+        return resultadoDaSoma;
+    }
+    public void  calculaRes(int i,int j){
+        ItemDeProjeto get = listaDeNodosValidos.get(i);
+        ItemDeProjeto get1 = listaDeNodosValidos.get(j);
+        int p =matAdj[i][j];
+        resultadoDaSoma += get1.getValor()*p;
+            
+        
     }
  
     public String getDistancias() {
@@ -197,18 +215,44 @@ public class Grafo1 {
         return Arrays.toString(predecessor);
     }   
 
-    public void excuta() {
-        for(int i = 1 ;i<listaDeNodosValidos.size()-1;i++){
-        String profundidade = profundidade(i);
-        System.out.println(profundidade);
-    }
-        ArrayList<Integer> adjacentes = getAdjacentes("GGW");
+    public void imprimeGrafico(String nodoRaiz){
+        String lista = "";
+        for (int i = 1; i < listaDeNodosValidos.size() ; i++) {
+            
+            if (listaDeNodosValidos.get(i).getNome() == nodoRaiz) {
+                String profundidade = profundidade(i);
+                try {
+                    String charAt = (String) profundidade.substring(1, 3);
+                    if ("->".equals(charAt)) {
+                        lista +=profundidade;
+                    }
+                } catch (Exception e) {
+                }
+            }
+        }
+
         
-        for (int i =0;i<adjacentes.size();i++){
+        for(int i =0;i<listaDeNodosValidos.size();i++){
+            String aux =""+i;
+            
+           String nome = listaDeNodosValidos.get(i).getNome();
+           String replace = lista.replace(aux, nome);
+           lista = replace;
+        }
+        System.out.println(lista);
+        
+    }
+    public void excuta(String nodoRAiz) {
+     imprimeGrafico(nodoRAiz);
+//        ArrayList<Integer> adjacentes = getAdjacentes("GGW");
+        
+ /*       for (int i =0;i<adjacentes.size();i++){
             
             System.out.print(listaDeNodosValidos.get(i).getNome() +" ");
        
         }
+        * */
+      System.out.print(resultadoDaSoma);
         System.out.print("\n");
     }
     

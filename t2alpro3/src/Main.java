@@ -46,12 +46,21 @@ public class Main {
         
         
         Grafo1 g = new Grafo1(lista);
-        g.addEdge("GGW", "NAL", 3);
-        g.addEdge("GGW", "TUM", 9);
-        g.addEdge("GGW", "WNJ", 4);
-        g.addEdge("NAL", "MCX", 7);
-        g.addEdge("MCX", "WNJ", 8);
-     
-        g.excuta();
+        g.addEdge("GMZ", "WNJ", 3);
+       g.addEdge("YUY", "FPK", 9);
+        g.addEdge("NAL", "QMR", 8);
+       g.addEdge("NAL", "SQD", 1);
+       g.addEdge("SQD", "YUY", 1);
+        g.addEdge("MCX", "YUY", 4);
+      g.addEdge("GMZ", "MCX", 9);
+      g.addEdge("GGW", "QMR", 9);
+       g.addEdge("GGW", "SQD", 7);
+        g.addEdge("MCX", "FPK", 3);
+        g.addEdge("GMZ", "TUM", 6);
+       g.addEdge("GMZ", "NAL", 1);
+        g.addEdge("TUM", "GGW", 1);
+        System.out.println("digraph G {");
+        g.excuta("GMZ");
+        System.out.println("}");
     }
 }
