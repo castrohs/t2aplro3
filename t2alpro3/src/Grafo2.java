@@ -43,7 +43,7 @@ public class Grafo2 {
 
 	public ArrayList<Integer> getAdjacentes(int nodo) {
 		if (nodo >= max || nodo < 1)
-			throw new IllegalArgumentException("Nodo inválido:" + nodo);
+			throw new IllegalArgumentException("Nodo invalido:" + nodo);
 		ArrayList<Integer> ads = new ArrayList<Integer>();
 		for (int i = 1; i < max; i++) {
 			if (matAdj[nodo][i] != 0) {
@@ -88,10 +88,10 @@ public class Grafo2 {
 		// colocar nodo na fila F
 		// visitar nodo
 		//
-		// enquanto a F não está vazia
+		// enquanto a F nï¿½o estï¿½ vazia
 		// remover de F um nodo n
 		// para cada adjacente de n
-		// se adjacente não está visitado
+		// se adjacente nï¿½o estï¿½ visitado
 		// visitar adjacente
 		// colocar adjacente na fila
 
@@ -168,7 +168,7 @@ public class Grafo2 {
 	
 	public ArrayList<Integer> getFontes() {
 		// para cada nodo
-		//	verificar se o nodo não tem entrada
+		//	verificar se o nodo nï¿½o tem entrada
 		
 		ArrayList<Integer> resultado = new ArrayList<Integer>();
 		int entradas;
@@ -189,7 +189,7 @@ public class Grafo2 {
 	public ArrayList<Integer> getSumidouros() {
 		//TODO: 
 		// para cada nodo
-		//	verificar se o nodo não tem saída
+		//	verificar se o nodo nï¿½o tem saï¿½da
 		ArrayList<Integer> resultado = new ArrayList<Integer>();
 		int saidas;
 		for (int i = 1; i < max; i++) {
@@ -255,7 +255,7 @@ public class Grafo2 {
 	public boolean isRede() {
 		// TODO:
 		// Determinar se o grafo tem somente uma fonte,
-		// somente um sumidouro e é conexo a partir da fonte
+		// somente um sumidouro e ï¿½ conexo a partir da fonte
 		ArrayList<Integer> fontes = getFontes();
 		ArrayList<Integer> sumidouros = getSumidouros();
 		if (fontes.size() != 1)

@@ -22,7 +22,7 @@ public class AppGrafo2 {
 			grafo.mostra();
 
 			System.out.printf("largura(%d): %s\n", 1, grafo.largura(1));
-			System.out.printf("Distâncias: %s\n", grafo.getDistancias());
+			System.out.printf("Distancias: %s\n", grafo.getDistancias());
 			System.out.printf("Predecessores: %s\n", grafo.getPredecessores());
 
 			// System.out.printf("largura(%d): %s\n", 3, grafo.largura(3));
