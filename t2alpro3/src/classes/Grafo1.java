@@ -8,7 +8,7 @@ public class Grafo1 {
 
     private int max;
     private int[][] matAdj;
-    private boolean[] visitado; // CORMEN ET ALLI color[]
+    private boolean[][] visitado; // CORMEN ET ALLI color[]
     private int[] distancia;// " d[]
     private int[] predecessor;// " p[] ou PI[]
     private ArrayList<ItemDeProjeto> listaDeNodosValidos = new ArrayList<>();
@@ -21,7 +21,7 @@ public class Grafo1 {
         listaDeNodosValidos = lista;
         max = listaDeNodosValidos.size();
         matAdj = new int[max][max];
-        visitado = new boolean[max];
+        visitado = new boolean[max][max];
 
         distancia = new int[max];
         predecessor = new int[max];
@@ -88,8 +88,10 @@ public class Grafo1 {
 
     private void clearVisitados() {
         for (int i = 1; i < max; i++) {
-            visitado[i] = false;
+            for (int j = 1; j < max; j++) {
+            visitado[i][j] = false;
         }
+    }
     }
 
     private void clearDistancias() {
@@ -103,7 +105,7 @@ public class Grafo1 {
             predecessor[i] = 0;
         }
     }
-
+/*
     public String largura(int nodo) {
         if (nodo >= max || nodo < 1) {
             throw new IllegalArgumentException("Nodo invalido: " + nodo);
@@ -152,8 +154,9 @@ public class Grafo1 {
 
         return result;
     }
+    */
     String result;
-
+/*
     public String dfs() {
         clearVisitados(); // CORMEN ET ALLI DFS, 1,2,3
         result = "";
@@ -166,38 +169,41 @@ public class Grafo1 {
 
         return result;
     }
-
-    public String profundidade(int u) {
+*/
+    public String profundidade(int k,int u) {
         clearVisitados(); // CORMEN ET ALLI DFS, 1,2,3
         result = "";
-        visitar(u);
+        visitar(k,u);
 
         resultadoDaSoma += listaDeNodosValidos.get(u).getValor();
-
+       // result += u+";";
         return result;
     }
     private double resultadoDaSoma = 0;
 
-    private void visitar(int u) {
+    private void visitar(int k,int u) {
 
-        visitado[u] = true;// CORMEN ET ALLI DFS-VISIT, 1
+        visitado[k][u] = true;
         //result += u+"->";
+     
         for (int i = 0; i < max; i++) {
             if (matAdj[u][i] != 0) {
                 result += u + "->";
-                if (visitado[i] == false) {
+                if (visitado[u][i] == false) {
 
-                    visitar(i);
+                        
+                    visitar(u,i);
                     calculaRes(u, i);
 
                 }
 
             }
+             
+        
         }
-
-
-        result += u + "; \n";
-
+        char a = result.charAt(result.length()-1);
+if(a!=';')
+    result +=u+";";
 
     }
 
@@ -207,7 +213,7 @@ public class Grafo1 {
     }
 
     public void calculaRes(int i, int j) {
-        ItemDeProjeto get = listaDeNodosValidos.get(i);
+     //   ItemDeProjeto get = listaDeNodosValidos.get(i);
         ItemDeProjeto get1 = listaDeNodosValidos.get(j);
         int p = matAdj[i][j];
         resultadoDaSoma += get1.getValor() * p;
@@ -228,7 +234,7 @@ public class Grafo1 {
         for (int i = 1; i < listaDeNodosValidos.size(); i++) {
 
             if (listaDeNodosValidos.get(i).getNome() == nodoRaiz) {
-                String profundidade = profundidade(i);
+                String profundidade = profundidade(i,i);
                 try {
                     String charAt = (String) profundidade.substring(1, 3);
                     if ("->".equals(charAt)) {
@@ -247,6 +253,7 @@ public class Grafo1 {
             String replace = lista.replace(aux, nome);
             lista = replace;
         }
+        
         System.out.println(lista);
 
     }
