@@ -13,7 +13,7 @@ public class Grafo1 {
     private int[] predecessor;// " p[] ou PI[]
     private ArrayList<ItemDeProjeto> listaDeNodosValidos = new ArrayList<>();
     private ArrayList<ItemDeProjeto> listabusca = new ArrayList<>();
-
+    private double resultadoDaSoma;
     public Grafo1(ArrayList<ItemDeProjeto> lista) {
         if (lista.size() <= 0) {
             throw new IllegalArgumentException("Numero de nodos invalido!");
@@ -25,6 +25,7 @@ public class Grafo1 {
 
         distancia = new int[max];
         predecessor = new int[max];
+        resultadoDaSoma = 0;
 
     }
 
@@ -175,26 +176,33 @@ public class Grafo1 {
         result = "";
         visitar(k,u);
 
-        resultadoDaSoma += listaDeNodosValidos.get(u).getValor();
+        //resultadoDaSoma += listaDeNodosValidos.get(u).getValor();
        // result += u+";";
+           
         return result;
     }
-    private double resultadoDaSoma = 0;
+
 
     private void visitar(int k,int u) {
-
+        
         visitado[k][u] = true;
         //result += u+"->";
-     
+        //double calculaRes =0;
+      //  calculaRes+= calculaRes(k, u);
         for (int i = 0; i < max; i++) {
             if (matAdj[u][i] != 0) {
                 result += u + "->";
-                if (visitado[u][i] == false) {
-
-                        
-                    visitar(u,i);
-                    calculaRes(u, i);
-
+                
+                if (visitado[u][i] == false) {   
+                    visitar(u, i);
+           //         ItemDeProjeto get = listaDeNodosValidos.get(u);
+                    ItemDeProjeto get1 = listaDeNodosValidos.get(i);
+                    int p = matAdj[u][i];
+                    //resultadoDaSoma += (get1.getValor() * p)+get.getValor();
+                    double resultado = (get1.getValor() * p);
+                    System.out.println(resultado*resultado);
+                    resultadoDaSoma += resultado;
+                    System.out.println(resultadoDaSoma);
                 }
 
             }
@@ -202,8 +210,11 @@ public class Grafo1 {
         
         }
         char a = result.charAt(result.length()-1);
-if(a!=';')
-    result +=u+";";
+        if(a!=';'){
+            result +=u+";";
+
+            System.out.println(resultadoDaSoma);
+        }
 
     }
 
@@ -212,14 +223,7 @@ if(a!=';')
         return resultadoDaSoma;
     }
 
-    public void calculaRes(int i, int j) {
-     //   ItemDeProjeto get = listaDeNodosValidos.get(i);
-        ItemDeProjeto get1 = listaDeNodosValidos.get(j);
-        int p = matAdj[i][j];
-        resultadoDaSoma += get1.getValor() * p;
 
-
-    }
 
     public String getDistancias() {
         return Arrays.toString(distancia);
