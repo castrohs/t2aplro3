@@ -182,41 +182,96 @@ public class Grafo1 {
         return result;
     }
 
-
+ private boolean raizDoNodo = false;
     private void visitar(int k,int u) {
-        
-        visitado[k][u] = true;
+      
+      //  visitado[k][u] = true;
         //result += u+"->";
         //double calculaRes =0;
       //  calculaRes+= calculaRes(k, u);
         for (int i = 0; i < max; i++) {
             if (matAdj[u][i] != 0) {
+                   resultadoDaSoma +=  resultadoTemporario;
+                     resultadoTemporario=0;
                 result += u + "->";
                 
-                if (visitado[u][i] == false) {   
-                    visitar(u, i);
-           //         ItemDeProjeto get = listaDeNodosValidos.get(u);
-                    ItemDeProjeto get1 = listaDeNodosValidos.get(i);
+                 
                     int p = matAdj[u][i];
+                    
+                    resultadoTemporario = 0;
+                    visitar(u, i);
+                    ItemDeProjeto get = listaDeNodosValidos.get(u);
+                    ItemDeProjeto get1 = listaDeNodosValidos.get(i);
+                    
+                    double resultado=0;
+                    p = matAdj[u][i];
+                    
+                    System.out.println("i: "+ i +" "+get1.getValor() + " "+get1.getNome());
+                    System.out.println("u: "+ u +" "+get.getValor() + " "+get.getNome());
+                    System.out.println("p: "+p);
+                    
+                    System.out.println("Resultado: " +resultadoTemporario);
                     //resultadoDaSoma += (get1.getValor() * p)+get.getValor();
-                    double resultado = (get1.getValor() * p);
-                    System.out.println(resultado*resultado);
-                    resultadoDaSoma += resultado;
-                    System.out.println(resultadoDaSoma);
-                }
-
-            }
+                  
+                           int size = getAdjacentes(get1.getNome()).size();
+                  if (size>=2 &&raizDoNodo==false ){
+                      System.out.println("ADJACENTES: " + size);  
+                     // int size = getAdjacentes(get.getNome()).size();
+                        double vezesAserRemovido= (size)-1;
+                        double teste = vezesAserRemovido*get1.getValor();
+                        resultadoDaSoma=resultadoTemporario+resultadoDaSoma-teste;
+                    //    resultadoTemporario=0;
+                        System.out.println("Resultado size: " +teste);
+                        System.out.println("Resultado resultadoDaSoma: " +resultadoDaSoma);
+                        
+                        raizDoNodo = true;
+                  }
+                    
+                  if(resultadoTemporario==0){
+                         System.out.println(" "+get1.getValor()+"*"  +p+" + "+get.getValor()+" ");
+                         resultadoTemporario += get1.getValor()*p+get.getValor();
+                         
+                  }
+                  else{
+                  //    System.out.println(resultadoDaSoma+ "+ ("+resultado+"*"  +p+") + "+get.getValor()+" ");
+                      resultado = resultadoTemporario;
+                      
+                      if (resultadoDaSoma>0){
+                          System.out.println( "(("+resultado+"+ " +resultadoDaSoma+" )"+" * "  +p+") + "+get.getValor()+" ");
+                          resultadoTemporario = ((resultado+resultadoDaSoma) * p)+get.getValor();
+                          
+                      }
+                      else{
+                      resultadoTemporario = (resultado * p)+get.getValor();
+                      System.out.println( "("+resultado+ " * "  +p+") + "+get.getValor()+" ");
+                      }
+                  //    System.out.println(resultadoDaSoma+ "+ ("+resultado+"*"  +p+") + "+get.getValor()+" ");
+                    
+                  }
              
-        
+                  //  System.out.println(resultado*resultado);
+                   // resultadoDaSoma += resultado;
+                 //   System.out.println(resultadoDaSoma);
+                    System.out.println("Resultado: " +resultadoTemporario);
+                
+                
+            }
+          //   resultadoDaSoma +=  resultadoTemporario;
+         //    resultadoTemporario=0;
+             raizDoNodo = false;
+       
         }
         char a = result.charAt(result.length()-1);
         if(a!=';'){
             result +=u+";";
-
-            System.out.println(resultadoDaSoma);
+            
+            System.out.println("TOTAL DA SOMA:  "+resultadoDaSoma);
         }
-
+        //resultadoDaSomaFim = resultadoDaSoma;
+     
     }
+    
+    private double resultadoTemporario =0;
 
     public double calculaResultado(int u) {
 
