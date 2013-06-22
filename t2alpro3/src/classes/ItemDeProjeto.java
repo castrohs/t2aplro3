@@ -4,6 +4,8 @@
  */
 package classes;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Gustavo
@@ -11,9 +13,11 @@ package classes;
 public class ItemDeProjeto {
 
     private String nome;
-    private double valor;
+    private double valor; 
+    private ArrayList<Aresta> listaDeArestas = new ArrayList<>();
+    private boolean  temPai = false;
 
-    public ItemDeProjeto(String nome, int valor) {
+    public ItemDeProjeto(String nome, double valor) {
         this.nome = nome;
         this.valor = valor;
     }
@@ -37,4 +41,24 @@ public class ItemDeProjeto {
     public String toString() {
         return nome;
     }
+    
+    public ArrayList<Aresta> getListaDeArestas() {
+        return listaDeArestas;
+    }
+
+    public void setListaDeArestas(ArrayList<Aresta> listaDeArestas) {
+        this.listaDeArestas = listaDeArestas;
+    }
+    public void addAresta(Aresta aresta){
+    listaDeArestas.add(aresta);
+    }
+
+    public boolean isTemPai() {
+        return temPai;
+    }
+
+    public void setTemPai(boolean temPai) {
+        this.temPai = temPai;
+    }
+    
 }

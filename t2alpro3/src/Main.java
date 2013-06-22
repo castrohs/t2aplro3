@@ -1,6 +1,7 @@
 
 import classes.Grafo1;
 import classes.ItemDeProjeto;
+import classes.Projeto;
 import java.util.ArrayList;
 
 /*
@@ -31,7 +32,7 @@ public class Main {
          }
          */
         ArrayList<ItemDeProjeto> lista = new ArrayList<>();
-        //lista.add(new ItemDeProjeto("", 0));
+//        lista.add(new ItemDeProjeto("", 0));
         lista.add(new ItemDeProjeto("NAL", 3));
         lista.add(new ItemDeProjeto("TUM", 4));
         lista.add(new ItemDeProjeto("GGW", 9));
@@ -45,21 +46,28 @@ public class Main {
 
 
         Grafo1 g = new Grafo1(lista);
-//        g.addEdge("GMZ", "WNJ", 3);
-        g.addEdge("YUY", "FPK", 9);
-//        g.addEdge("NAL", "QMR", 8);
-//        g.addEdge("NAL", "SQD", 1);
-//        g.addEdge("SQD", "YUY", 1);
-        g.addEdge("MCX", "YUY", 4);
-          g.addEdge("GMZ", "MCX", 9);
-//        g.addEdge("GGW", "QMR", 9);
-//        g.addEdge("GGW", "SQD", 7);
-        g.addEdge("MCX", "FPK", 3);
-//        g.addEdge("GMZ", "TUM", 6);
-//        g.addEdge("GMZ", "NAL", 1);
-//        g.addEdge("TUM", "GGW", 1);
+        Projeto p = new Projeto();
+        p.setLista_itens(lista);
+       
+
+        
+        p.addAresta("GMZ", "WNJ", 3);
+        p.addAresta("YUY", "FPK", 9);
+        p.addAresta("NAL", "QMR", 8);
+        p.addAresta("NAL", "SQD", 1);
+        p.addAresta("SQD", "YUY", 1);
+        p.addAresta("MCX", "YUY", 4);
+        p.addAresta("GMZ", "MCX", 9);
+        p.addAresta("GGW", "QMR", 9);
+        p.addAresta("GGW", "SQD", 7);
+        p.addAresta("MCX", "FPK", 3);
+        p.addAresta("GMZ", "TUM", 6);
+        p.addAresta("GMZ", "NAL", 1);
+        p.addAresta("TUM", "GGW", 2);
 //        System.out.println("digraph G {");
-        g.excuta("GMZ");
-        System.out.println("}");
+       // g.excuta("GMZ");
+       
+        System.out.println( p.calcula());
+
     }
 }
