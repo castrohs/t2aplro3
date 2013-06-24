@@ -29,18 +29,8 @@ public class Grafo1 {
 
     }
 
-    public void addEdge(String orig, String dest, int p) {
-        /*
-         boolean podeCadastrar =true;
-         for(String s : listaDeNodosValidos){
-         if (!s.equalsIgnoreCase(orig))
-         }
-         if(){
-         throw new IllegalArgumentException("Aresta invalida, orig: " + orig
-         + " dest:" + dest);
-         }
- 
-         else*/
+    public void addAresta(String orig, String dest, int p) {
+     
         for (int i = 0; i < listaDeNodosValidos.size(); i++) {
             ItemDeProjeto origAux = listaDeNodosValidos.get(i);
             if (orig.equalsIgnoreCase(origAux.getNome())) {
@@ -106,168 +96,44 @@ public class Grafo1 {
             predecessor[i] = 0;
         }
     }
-/*
-    public String largura(int nodo) {
-        if (nodo >= max || nodo < 1) {
-            throw new IllegalArgumentException("Nodo invalido: " + nodo);
-        }
 
-        String result = "";
-
-        // http://books.google.com.br/books?id=NLngYyWFl_YC&pg=PA531&lpg=PA531&dq=cormen+breadth+first+graph&source=bl&ots=BxTvIE8hE8&sig=y19mlkk0Vl3e0zlOLg81ABBrvc0&hl=pt-BR&sa=X&ei=sYumUea-JefO0wGd24HQDw&ved=0CDYQ6AEwAA#v=onepage&q&f=true
-        // @author Gabriel D. Schmoeller
-        // limpar visitados
-        // colocar nodo na fila F
-        // visitar nodo
-        //
-        // enquanto a F não está vazia
-        // remover de F um nodo n
-        // para cada adjacente de n
-        // se adjacente não está visitado
-        // visitar adjacente
-        // colocar adjacente na fila
-
-        clearVisitados();
-        clearDistancias();
-        clearPredecessores();
-
-        LinkedList<Integer> f = new LinkedList<Integer>();
-        f.add(nodo);
-
-        visitado[nodo] = true;
-        distancia[nodo] = 0;
-        predecessor[nodo] = 0;
-
-        result += " " + nodo;
-        while (f.size() > 0) {
-            int n = f.remove();
-
-            for (int i = 1; i < max; i++) {
-                if (matAdj[n][i] != 0 && !visitado[i]) {
-                    visitado[i] = true;
-                    distancia[i] = distancia[n] + 1;
-                    predecessor[i] = n;
-                    f.add(i);
-                    result += " " + i;
-                }
-            }
-        }
-
-        return result;
-    }
-    */
     String result;
-/*
-    public String dfs() {
-        clearVisitados(); // CORMEN ET ALLI DFS, 1,2,3
-        result = "";
 
-        for (int u = 1; u < max; u++) { // CORMEN ET ALLI DFS, 5, 6, 7
-            if (visitado[u] == false) {
-                visitar(u);
-            }
-        }
-
-        return result;
-    }
-*/
     public String profundidade(int k,int u) {
         clearVisitados(); // CORMEN ET ALLI DFS, 1,2,3
         result = "";
-        visitar(k,u);
-
-        //resultadoDaSoma += listaDeNodosValidos.get(u).getValor();
-       // result += u+";";
-           
+        visitar(k,u,0);
+              
         return result;
     }
 
- private boolean raizDoNodo = false;
-    private void visitar(int k,int u) {
-      
-      //  visitado[k][u] = true;
-        //result += u+"->";
-        //double calculaRes =0;
-      //  calculaRes+= calculaRes(k, u);
+
+    private void visitar(int k,int u,int p) {
+         
+        ItemDeProjeto get = listaDeNodosValidos.get(u);
         for (int i = 0; i < max; i++) {
             if (matAdj[u][i] != 0) {
                    resultadoDaSoma +=  resultadoTemporario;
+                
                      resultadoTemporario=0;
-                result += u + "->";
-                
-                 
-                    int p = matAdj[u][i];
-                    
-                    resultadoTemporario = 0;
-                    visitar(u, i);
-                    ItemDeProjeto get = listaDeNodosValidos.get(u);
-                    ItemDeProjeto get1 = listaDeNodosValidos.get(i);
-                    
-                    double resultado=0;
-                    p = matAdj[u][i];
-                    
-                    System.out.println("i: "+ i +" "+get1.getValor() + " "+get1.getNome());
-                    System.out.println("u: "+ u +" "+get.getValor() + " "+get.getNome());
-                    System.out.println("p: "+p);
-                    
-                    System.out.println("Resultado: " +resultadoTemporario);
-                    //resultadoDaSoma += (get1.getValor() * p)+get.getValor();
-                  
-                           int size = getAdjacentes(get1.getNome()).size();
-                  if (size>=2 &&raizDoNodo==false ){
-                      System.out.println("ADJACENTES: " + size);  
-                     // int size = getAdjacentes(get.getNome()).size();
-                        double vezesAserRemovido= (size)-1;
-                        double teste = vezesAserRemovido*get1.getValor();
-                        resultadoDaSoma=resultadoTemporario+resultadoDaSoma-teste;
-                    //    resultadoTemporario=0;
-                        System.out.println("Resultado size: " +teste);
-                        System.out.println("Resultado resultadoDaSoma: " +resultadoDaSoma);
-                        
-                        raizDoNodo = true;
-                  }
-                    
-                  if(resultadoTemporario==0){
-                         System.out.println(" "+get1.getValor()+"*"  +p+" + "+get.getValor()+" ");
-                         resultadoTemporario += get1.getValor()*p+get.getValor();
-                         
-                  }
-                  else{
-                  //    System.out.println(resultadoDaSoma+ "+ ("+resultado+"*"  +p+") + "+get.getValor()+" ");
-                      resultado = resultadoTemporario;
+                     p = matAdj[u][i];   
+                     result +="[label="+p+"]"+get.getNome() + "->";
                       
-                      if (resultadoDaSoma>0){
-                          System.out.println( "(("+resultado+"+ " +resultadoDaSoma+" )"+" * "  +p+") + "+get.getValor()+" ");
-                          resultadoTemporario = ((resultado+resultadoDaSoma) * p)+get.getValor();
-                          
-                      }
-                      else{
-                      resultadoTemporario = (resultado * p)+get.getValor();
-                      System.out.println( "("+resultado+ " * "  +p+") + "+get.getValor()+" ");
-                      }
-                  //    System.out.println(resultadoDaSoma+ "+ ("+resultado+"*"  +p+") + "+get.getValor()+" ");
-                    
-                  }
-             
-                  //  System.out.println(resultado*resultado);
-                   // resultadoDaSoma += resultado;
-                 //   System.out.println(resultadoDaSoma);
-                    System.out.println("Resultado: " +resultadoTemporario);
-                
-                
+                    resultadoTemporario = 0;
+                    visitar(u, i,p);     
+                    //result +="[label="+p+"]";
+                  //   result +="[label="+p+"]";
             }
-          //   resultadoDaSoma +=  resultadoTemporario;
-         //    resultadoTemporario=0;
-             raizDoNodo = false;
+           
        
         }
         char a = result.charAt(result.length()-1);
         if(a!=';'){
-            result +=u+";";
+            result +=get.getNome()+"[label="+p+"]"+";";
             
-            System.out.println("TOTAL DA SOMA:  "+resultadoDaSoma);
+
         }
-        //resultadoDaSomaFim = resultadoDaSoma;
+
      
     }
     
@@ -288,16 +154,16 @@ public class Grafo1 {
         return Arrays.toString(predecessor);
     }
 
-    public void imprimeGrafico(String nodoRaiz) {
-        String lista = "";
+    public void imprimeGrafico(ItemDeProjeto nodoRaiz) {
+        String lista = "digraph g{\n";
         for (int i = 1; i < listaDeNodosValidos.size(); i++) {
 
-            if (listaDeNodosValidos.get(i).getNome() == nodoRaiz) {
-                String profundidade = profundidade(i,i);
+            if (listaDeNodosValidos.get(i)  == nodoRaiz) {
+                String prof = profundidade(i,i);
                 try {
-                    String charAt = (String) profundidade.substring(1, 3);
+                    String charAt = (String) prof.substring(1, 3);
                     if ("->".equals(charAt)) {
-                        lista += profundidade;
+                        lista += prof;
                     }
                 } catch (Exception e) {
                 }
@@ -314,10 +180,11 @@ public class Grafo1 {
         }
         
         System.out.println(lista);
+        System.out.println("}");
 
     }
 
-    public void excuta(String nodoRAiz) {
+    public void excuta(ItemDeProjeto nodoRAiz) {
         imprimeGrafico(nodoRAiz);
 //        ArrayList<Integer> adjacentes = getAdjacentes("GGW");
 
@@ -327,7 +194,7 @@ public class Grafo1 {
        
          }
          * */
-        System.out.print(resultadoDaSoma);
+        System.out.print(result);
         System.out.print("\n");
     }
 }

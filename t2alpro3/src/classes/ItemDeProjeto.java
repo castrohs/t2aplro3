@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class ItemDeProjeto {
 
     private String nome;
+    private double valorCalculado;
     private double valor; 
     private ArrayList<Aresta> listaDeArestas = new ArrayList<>();
     private boolean  temPai = false;
@@ -60,5 +61,14 @@ public class ItemDeProjeto {
     public void setTemPai(boolean temPai) {
         this.temPai = temPai;
     }
+
+    public double getValorCalculado() {
+        return valorCalculado;
+    }
+
+    public void setValorCalculado(double valorCalculado) {
+        this.valorCalculado = valorCalculado;
+    }
+    
     
 }

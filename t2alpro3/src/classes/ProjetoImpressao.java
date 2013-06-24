@@ -10,9 +10,9 @@ import java.util.ArrayList;
  *
  * @author Gustavo
  */
-public class Projeto {
-ArrayList<ItemDeProjeto> lista_itens = new ArrayList<>   ();
-
+public class ProjetoImpressao {
+ArrayList<ItemDeProjeto> lista_itens = new ArrayList<>();
+private String result;
         //static int valortotal = 0;
 
         public void adicionaItensDeProjeto(String nome, double valor)
@@ -20,17 +20,20 @@ ArrayList<ItemDeProjeto> lista_itens = new ArrayList<>   ();
             
             lista_itens.add(new ItemDeProjeto(nome, valor));
         }
-
+        
         public void addAresta(String origem, String destino, double valor)
         {
+            
             for (ItemDeProjeto item: lista_itens)
             {
                 if (item.getNome().equalsIgnoreCase(origem))
                 {
+                    result += origem;
                     for (ItemDeProjeto itemDestino: lista_itens)
                     {
                         if (itemDestino.getNome().equalsIgnoreCase(destino))
                         {
+                            result += "->"+destino;
                             itemDestino.setTemPai(true);
                             Aresta aresta = new Aresta(itemDestino,valor);
                             item.addAresta(aresta);
@@ -68,53 +71,31 @@ ArrayList<ItemDeProjeto> lista_itens = new ArrayList<>   ();
             return 0.0;  
         }
 
-     public double calcula(ItemDeProjeto raiz)
+        public double calcula(ItemDeProjeto raiz)
         {
             double valor = raiz.getValor();
-            
             for (Aresta arestas: raiz.getListaDeArestas())
             {
-              
-             
-               valor = valor + (arestas.getValor() * calcula(arestas.getDestino()));
-                
-                   arestas.getDestino().setValorCalculado(valor); 
-               
+                valor = valor + (arestas.getValor() * calcula(arestas.getDestino()));
             }
-            raiz.setValorCalculado(valor);
             return valor;
         }
 
     public void setLista_itens(ArrayList<ItemDeProjeto> lista_itens) {
         this.lista_itens = lista_itens;
     }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
     
     
     
     
-  
-      
-        public void imprimeGrafico()
-        {
-           
-            String resultado = "";
-            
-            ArrayList<ItemDeProjeto> listAux = new ArrayList<>(lista_itens);
-            
-            for (ItemDeProjeto item: listAux)
-            {
-                    resultado+=item.getNome()+"[label=\""+item.getNome()+"$ "+item.getValor()+"\"];";
-                    for (Aresta  aresta: item.getListaDeArestas())
-                    {
-                        resultado+=item.getNome()+"->"+aresta.getDestino().getNome()+"[label="+aresta.getValor()+"];";
-                    }
-                   // resultado +=";";
-                }
-            
-            System.out.println(resultado);
-            
-            }
-        }
     
     
     
@@ -124,7 +105,7 @@ ArrayList<ItemDeProjeto> lista_itens = new ArrayList<>   ();
     
     
         
-
+    }
 
 
 
